@@ -1,6 +1,6 @@
 import sim
 from connect import EdoConnection
-
+import time
 
 if __name__ == '__main__':
     print('Program Started')
@@ -11,6 +11,9 @@ if __name__ == '__main__':
         print('Failed connecting to remote API server')
 
     edo_robot = EdoConnection(Client_ID=clientID, joint_numbers=6, max_Vel=0.1)
-    edo_robot.move_joints(j_mov_all=45)
 
-
+    for i in range(60):
+        print(f'{i}:{edo_robot.get_joints_relative_position()}')
+        print(f'{i}: {edo_robot.get_object_position()}')
+        time.sleep(1)
+    #edo_robot.move_joints(j2_mov=360)
