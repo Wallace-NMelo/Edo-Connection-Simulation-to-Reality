@@ -1,7 +1,7 @@
 import sim
 
 
-class EdoConnection:
+class EdoController:
     def __init__(self, Client_ID, joint_numbers, max_Vel):
         self.client_id = Client_ID
         self.joint_numbers = joint_numbers
@@ -17,9 +17,8 @@ class EdoConnection:
 
         return [object[1] for object in objects_handles if object[0] == 0]
 
-    def _set_upper_limit(self, joints):
-        for joint in joints:
-            sim.simxSetObjectFloatParameter(self.client_id, joint, sim.sim_jointfloatparam_upper_limit, self.max_Vel,
+    def _set_upper_limit(self, joint):
+        sim.simxSetObjectFloatParameter(self.client_id, joint, sim.sim_jointfloatparam_upper_limit, self.max_Vel,
                                             sim.simx_opmode_oneshot)
 
     def _set_target_position(self, joint, joint_mov):
@@ -29,8 +28,7 @@ class EdoConnection:
 
     def _get_target_position(self, joint, operation_mode):
         ret, pos = sim.simxGetJointPosition(self.client_id, joint, operation_mode)
-        if ret < 0:
-            return pos
+        return pos if ret == 0 else None
 
     def get_joints_relative_position(self, operation_mode=sim.simx_opmode_buffer):
         return [self._get_target_position(joint, operation_mode) for joint in self.joints_handles]
