@@ -42,7 +42,6 @@ class edosim(EdoRobot):
         j6_position = self.J6.pos
 
     def getCartesian(self):
-
         pass
     def get_JointState(self):
         self.update()

@@ -22,7 +22,6 @@ def simtest_cartesian_mov():
     time.sleep(2)
     edosim_test.mov_cartesian(x, +4.4457e-01 - delta, +9.7262e-01)
     time.sleep(2)
-
     edosim_test.mov_to_default_pos()
 
 

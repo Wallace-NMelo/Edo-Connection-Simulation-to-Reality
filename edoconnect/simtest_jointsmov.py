@@ -26,6 +26,5 @@ def simtest_jointsmov():
     # edosim_test.finish()
 
 
-
 if __name__ == '__main__':
     simtest_jointsmov()
