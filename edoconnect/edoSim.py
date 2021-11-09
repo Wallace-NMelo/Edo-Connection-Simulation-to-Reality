@@ -27,7 +27,8 @@ class edosim(EdoRobot):
     def moveJoints(self, j1=0.0, j2=0.0, j3=0.0, j4=0.0, j5=0.0, j6=0.0):
         self.mov_joints_pos(j1, j2, j3, j4, j5, j6)
 
-    def moveCartesian(self, vel=100, x=370, y=0, z=210, a=0, e=0, r=0):
+    def moveCartesian(self, x=370, y=0, z=210, a=0, e=0, r=0):
+        x, y, z = x/1000.0, y/1000.0, z/1000.0
         self.mov_cartesian(x, y, z)
 
     def moveCancel(self):

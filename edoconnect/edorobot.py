@@ -125,6 +125,8 @@ class EdoRobot(EdoObject):
     def mov_cartesian(self, x, y, z, op_mode=sim.simx_opmode_oneshot):
         # mover para posição
         position = [x, y, z]
+        print(position)
+
         sim.simxSetObjectPosition(self.client_id, self.sphere.handle, -1, position, op_mode)
         sim.simxSetIntegerSignal(self.client_id, 'is_inverse', 1, sim.simx_opmode_oneshot)
 
