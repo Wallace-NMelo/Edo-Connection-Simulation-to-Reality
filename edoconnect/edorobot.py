@@ -1,6 +1,3 @@
-import sys
-import time
-
 import sim
 from edoobject import EdoObject
 
@@ -38,10 +35,6 @@ class EdoRobot(EdoObject):
                                                  relativeToObjectHandle=self.base.handle, operationMode=operation_mode)
         return rel_pos
 
-    # def get_object_position(self, object_handle, operation_mode=sim.simx_opmode_buffer):
-    #     ret, obj_pos = sim.simxGetObjectPosition(self.client_id, object_handle, -1, operation_mode)
-    #     return obj_pos if ret == 0 else None
-
     def define_objects_names(self):
         # Define Objects Names
         self.base.name = AUX_OBJECTS_NAMES[0]
@@ -60,7 +53,6 @@ class EdoRobot(EdoObject):
         for i in range(20):
             result = sim.simxGetObjectGroupData(self.client_id, sim.sim_object_joint_type,
                                                 i, sim.simx_opmode_oneshot_wait)
-            # print(f'type: {i}-{result}')
 
     def define_objects_handle(self):
         err, handles, ints, floats, strings = sim.simxGetObjectGroupData(self.client_id,
@@ -132,12 +124,12 @@ class EdoRobot(EdoObject):
 
     def mov_joints_pos(self, t1, t2, t3, t4, t5, t6):
         sim.simxSetIntegerSignal(self.client_id, 'is_inverse', 0, sim.simx_opmode_oneshot)
-        sim.simxSetJointTargetPosition(self.client_id, self.J1.handle, t1, sim.simx_opmode_oneshot)
-        sim.simxSetJointTargetPosition(self.client_id, self.J2.handle, t2, sim.simx_opmode_oneshot)
-        sim.simxSetJointTargetPosition(self.client_id, self.J3.handle, t3, sim.simx_opmode_oneshot)
-        sim.simxSetJointTargetPosition(self.client_id, self.J4.handle, t4, sim.simx_opmode_oneshot)
-        sim.simxSetJointTargetPosition(self.client_id, self.J5.handle, t5, sim.simx_opmode_oneshot)
-        sim.simxSetJointTargetPosition(self.client_id, self.J6.handle, t6, sim.simx_opmode_oneshot)
+        sim.simxSetJointTargetPosition(self.client_id, self.J1.handle, t1 * 3.1415 / 180, sim.simx_opmode_oneshot)
+        sim.simxSetJointTargetPosition(self.client_id, self.J2.handle, t2 * 3.1415 / 180, sim.simx_opmode_oneshot)
+        sim.simxSetJointTargetPosition(self.client_id, self.J3.handle, t3 * 3.1415 / 180, sim.simx_opmode_oneshot)
+        sim.simxSetJointTargetPosition(self.client_id, self.J4.handle, t4 * 3.1415 / 180, sim.simx_opmode_oneshot)
+        sim.simxSetJointTargetPosition(self.client_id, self.J5.handle, t5 * 3.1415 / 180, sim.simx_opmode_oneshot)
+        sim.simxSetJointTargetPosition(self.client_id, self.J6.handle, t6 * 3.1415 / 180, sim.simx_opmode_oneshot)
 
     def mov_to_default_pos(self):
         self.mov_joints_pos(0, 0, 0, 0, 0, 0)
@@ -168,28 +160,30 @@ class EdoRobot(EdoObject):
         self.target.show()
         self.tip.show()
 
+# def edorobot_test():
+#     # test
+#     print('Program Started')
+#     sim.simxFinish(-1)
+#     clientID = sim.simxStart('127.0.0.1', 19999, True, True, 5000, 5)
+#     if clientID != -1:
+#         print('Connected to remote API server')
+#     else:
+#         print('Failed connecting to remote API server')
+#
+#     edorobot = EdoRobot(client_id=clientID)
+#     sim.simxStartSimulation(edorobot.client_id, sim.simx_opmode_oneshot_wait)
+#     print(edorobot.test())
+#
+#     edorobot.mov_cartesian(+1.2969e-02, -5.4282e-03, +9.7261e-01)
+#     edorobot.mov_to_default_pos()
+#
+#     while True:
+#         edorobot.show_all_objects()
+#
+#         edorobot.update()
+#         # edorobot.show_all_objects()
+#         time.sleep(1)
+#         sys.stdout.flush()
 
-if __name__ == '__main__':
-    # test
-    print('Program Started')
-    sim.simxFinish(-1)
-    clientID = sim.simxStart('127.0.0.1', 19999, True, True, 5000, 5)
-    if clientID != -1:
-        print('Connected to remote API server')
-    else:
-        print('Failed connecting to remote API server')
 
-    edorobot = EdoRobot(client_id=clientID)
-    sim.simxStartSimulation(edorobot.client_id, sim.simx_opmode_oneshot_wait)
-    # print(edorobot.test())
-
-    # edorobot.mov_cartesian(+1.2969e-02, -5.4282e-03, +9.7261e-01)
-    # edorobot.mov_to_default_pos()
-    #
-    # while True:
-    #     edorobot.show_all_objects()
-    #
-    #     edorobot.update()
-    #     # edorobot.show_all_objects()
-    #     time.sleep(1)
-    #     sys.stdout.flush()
+# edorobot_test()
